@@ -35,8 +35,8 @@ class AuthControllerTest {
 
         // when & then
         mockMvc.perform(post("/auth")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(requestDto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(requestDto)))
                 .andExpect(status().isCreated())
                 .andExpect(content().string("생성 완료"))
                 .andDo(print());
