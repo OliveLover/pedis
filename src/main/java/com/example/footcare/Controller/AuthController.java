@@ -3,7 +3,6 @@ package com.example.footcare.Controller;
 import com.example.footcare.Dto.UserRequestDto;
 import com.example.footcare.Service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

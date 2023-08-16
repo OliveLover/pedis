@@ -12,9 +12,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
-    private AuthRepository authRepository;
+    private final AuthRepository authRepository;
 
     public ResponseEntity<String> createUser(UserRequestDto responseDto) {
+        String name = responseDto.getName();
+        String password = responseDto.getPassword();
+
+        Users users = new Users(name, password);
+
+        authRepository.save(users);
+
         return new ResponseEntity<>("생성 완료", HttpStatus.CREATED);
     }
 }
