@@ -2,8 +2,10 @@ package com.example.footcare.Model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 @Table(name = "USERS")
 @Entity
 public class Users {
