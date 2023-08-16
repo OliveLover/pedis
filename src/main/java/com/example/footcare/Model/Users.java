@@ -16,4 +16,9 @@ public class Users {
 
     @Column
     String password;
+
+    public Users(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
 }
