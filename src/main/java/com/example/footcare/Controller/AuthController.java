@@ -1,6 +1,7 @@
 package com.example.footcare.Controller;
 
 import com.example.footcare.Dto.UserRequestDto;
+import com.example.footcare.Service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
+    private final AuthService authService;
+
     @PostMapping("/auth")
     public ResponseEntity<String> createUser(@RequestBody UserRequestDto responseDto) {
-        return new ResponseEntity<>("생성 완료", HttpStatus.CREATED);
+        return authService.createUser(responseDto);
     }
 }
