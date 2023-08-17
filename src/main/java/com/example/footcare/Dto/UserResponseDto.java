@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequestDto {
-    private String username;
-    private String password;
+public class UserResponseDto {
+    private String msg;
 }
