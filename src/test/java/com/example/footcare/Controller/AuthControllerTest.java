@@ -34,7 +34,7 @@ class AuthControllerTest {
         UserRequestDto requestDto = new UserRequestDto("김수박", "abcdefg");
 
         // when & then
-        mockMvc.perform(post("/auth")
+        mockMvc.perform(post("/auth/join")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(requestDto)))
                 .andExpect(status().isCreated())

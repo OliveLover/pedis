@@ -14,7 +14,7 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/auth")
+    @PostMapping("/auth/join")
     public ResponseEntity<String> createUser(@RequestBody UserRequestDto responseDto) {
         return authService.createUser(responseDto);
     }
