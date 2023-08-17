@@ -1,6 +1,7 @@
 package com.example.footcare.Service;
 
 import com.example.footcare.Dto.UserRequestDto;
+import com.example.footcare.Dto.UserResponseDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -26,10 +29,10 @@ class AuthServiceTest {
         UserRequestDto requestDto = new UserRequestDto("김수박", "abcdefg");
 
         // when
-        ResponseEntity<String> response = authService.createUser(requestDto);
+        ResponseEntity<UserResponseDto> response = authService.createUser(requestDto);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(response.getBody()).isEqualTo("생성 완료");
+        assertThat(Objects.requireNonNull(response.getBody()).getMsg()).isEqualTo("생성 완료");
     }
 }

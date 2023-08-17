@@ -12,7 +12,7 @@ public class IndexController {
     }
 
     @GetMapping("/auth")
-    public String join() {
+    public String signUp() {
         return "sign-up";
     }
 }

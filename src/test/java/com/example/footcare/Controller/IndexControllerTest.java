@@ -25,4 +25,14 @@ class IndexControllerTest {
         // then
         assertThat(body).contains("footcare");
     }
+
+    @Test
+    @DisplayName("회원 가입 페이지를 로딩한다.")
+    void signUp() {
+        // when
+        String body = this.restTemplate.getForObject("/auth", String.class);
+
+        // then
+        assertThat(body).contains("name");
+    }
 }

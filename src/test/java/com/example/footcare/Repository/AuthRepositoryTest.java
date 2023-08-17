@@ -39,7 +39,7 @@ class AuthRepositoryTest {
 
             // then
             assertThat(usersList).hasSize(1)
-                    .extracting("id", "name", "password")
+                    .extracting("id", "username", "password")
                     .containsExactlyInAnyOrder(
                             tuple(1L, "김수박", "abcdefg")
                     );
@@ -60,7 +60,7 @@ class AuthRepositoryTest {
 
             // then
             assertThat(usersList).hasSize(3)
-                    .extracting("id", "name", "password")
+                    .extracting("id", "username", "password")
                     .containsExactlyInAnyOrder(
                             tuple(2L, "김수박", "abcdefg"),
                             tuple(3L, "박참외", "hijklmn"),

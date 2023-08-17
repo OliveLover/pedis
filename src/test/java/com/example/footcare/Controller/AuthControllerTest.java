@@ -14,8 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -29,17 +28,17 @@ class AuthControllerTest {
     ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("\"/auth\" 를 호출하여 계정을 만들면 \"생성 완료\" 메시지가 출력된다.")
+    @DisplayName("\"/api/v1/join\" 를 호출하여 계정을 만들면 JSON 형식으로 \"msg\"가 출력된다.")
     void createUser() throws Exception {
         // given
         UserRequestDto requestDto = new UserRequestDto("김수박", "abcdefg");
 
         // when & then
-        mockMvc.perform(post("/auth/join")
+        mockMvc.perform(post("/api/v1/join")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(requestDto)))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("생성 완료"))
+                .andExpect(jsonPath("$.msg").exists())
                 .andDo(print());
     }
 }
