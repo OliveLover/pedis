@@ -1,0 +1,3 @@
+[submodule "pedis-submodule-config"]
+	path = pedis-submodule-config
+	url = git@github.com:OliveLover/pedis-submodule-config.git
