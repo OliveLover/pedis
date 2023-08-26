@@ -2,9 +2,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "git-hub-actions", "git-hub-actions-build" ]
+    branches: [ "git-hub-actions-build" ]
   pull_request:
-    branches: [ "git-hub-actions", "git-hub-actions-build" ]
+    branches: [ "git-hub-actions-build" ]
 
 env:
   S3_BUCKET_NAME: github-actions-deploy-0824
@@ -73,23 +73,3 @@ jobs:
 
       - name: Upload to S3
         run: aws s3 cp --region ap-northeast-2 ./github-actions.zip s3://$S3_BUCKET_NAME/
-
-  develop:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.event.push.branches == 'git-hub-actions' || github.event.pull_request.branches == 'git-hub-actions-build'
-
-    steps:
-
-      # Deploy
-      - name: Deploy
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          aws deploy create-deployment \
-          --application-name github-actions \
-          --deployment-group-name github-actions-group \
-          --file-exists-behavior OVERWRITE \
-          --s3-location bucket=github-actions-deploy-0824,bundleType=zip,key=github-actions.zip \
-          --region ap-northeast-2
