@@ -2,12 +2,12 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "{ 브랜치1 }", "{ 브랜치2 }" ]
+    branches: [ "git-hub-actions", "git-hub-actions-build" ]
   pull_request:
-    branches: [ "{ 브랜치1 }", "{ 브랜치2 }" ]
+    branches: [ "git-hub-actions", "git-hub-actions-build" ]
 
 env:
-  S3_BUCKET_NAME: { S3 버킷 명 }
+  S3_BUCKET_NAME: github-actions-deploy-0824
 
 permissions:
   contents: read
@@ -30,7 +30,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PEDIS_TOKEN }}
           submodules: true
 
       # Gradle 유효성 검사
@@ -61,7 +61,7 @@ jobs:
         run: cp ./scripts/*.sh ./deploy
 
       - name: Make zip file
-        run: zip -r ./{ 압축파일 명 }.zip ./deploy
+        run: zip -r ./github-actions.zip ./deploy
         shell: bash
 
       - name: Configure AWS credentials
@@ -72,7 +72,7 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./{ 압축파일 명 }.zip s3://$S3_BUCKET_NAME/
+        run: aws s3 cp --region ap-northeast-2 ./github-actions.zip s3://$S3_BUCKET_NAME/
 
   develop:
     runs-on: ubuntu-latest
