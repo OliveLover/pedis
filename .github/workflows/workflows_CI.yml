@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "git-hub-actions-build" ]
   pull_request:
-    branches: [ "git-hub-actions", "git-hub-actions-build" ]
+    branches:
 
 env:
   S3_BUCKET_NAME: github-actions-deploy-0824
