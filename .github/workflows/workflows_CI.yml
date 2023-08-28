@@ -88,6 +88,6 @@ jobs:
           paths: |
             ${{ github.workspace }}/**/build/reports/jacoco/prodNormalDebugCoverage/prodNormalDebugCoverage.xml,
             ${{ github.workspace }}/**/build/reports/jacoco/**/debugCoverage.xml
-        token: ${{ secrets.PEDIS_TOKEN }}
-        min-coverage-overall: 40
-        min-coverage-changed-files: 60
+          token: ${{ secrets.PEDIS_TOKEN }}
+          min-coverage-overall: 40
+          min-coverage-changed-files: 60
