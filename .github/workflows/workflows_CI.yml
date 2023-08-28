@@ -77,15 +77,15 @@ jobs:
         run: aws s3 cp --region ap-northeast-2 ./github-actions.zip s3://$S3_BUCKET_NAME/
 
       - name: Run Coverage
-        run: |
-            ./gradlew jacocoTestCoverageVerification
+        run: ./gradlew testCoverage
 
-      - name: Add coverage to PR
+      - name: Jacoco Report to PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.6.1
         with:
-          paths: |
-            ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml,
+          paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml,
           token: ${{ secrets.PEDIS_TOKEN }}
           min-coverage-overall: 40
           min-coverage-changed-files: 60
+          title: Code Coverage
+          update-comment: true
