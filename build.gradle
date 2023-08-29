@@ -12,6 +12,10 @@ java {
     sourceCompatibility = '17'
 }
 
+jacoco {
+    toolVersion = "0.8.8"
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -51,6 +55,7 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 processResources.dependsOn('copySecret')
