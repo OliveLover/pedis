@@ -94,23 +94,23 @@ jobs:
         uses: insightsengineering/coverage-action@v2
         with:
         # Path to the Cobertura XML report.
-        path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+          path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
         # Minimum total coverage, if you want to the
         # workflow to enforce it as a standard.
         # This has no effect if the `fail` arg is set to `false`.
-        threshold: 80
+          threshold: 80
         # Fail the workflow if the minimum code coverage
         # reuqirements are not satisfied.
-        fail: true
+          fail: true
         # Publish the rendered output as a PR comment
-        publish: true
+          publish: true
         # Create a coverage diff report.
-        diff: true
+          diff: true
         # Branch to diff against.
         # Compare the current coverage to the coverage
         # determined on this branch.
-        diff-branch: git-hub-actions
+          diff-branch: git-hub-actions
         # This is where the coverage reports for the
         # `diff-branch` are stored.
         # Branch is created if it doesn't already exist'.
-        diff-storage: _xml_coverage_reports
+          diff-storage: _xml_coverage_reports
