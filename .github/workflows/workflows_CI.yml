@@ -84,4 +84,4 @@ jobs:
         run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
 
       - name: report
-        run: ls - R
+        run: ls -R
