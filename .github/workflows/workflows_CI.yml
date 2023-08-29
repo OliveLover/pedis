@@ -47,7 +47,6 @@ jobs:
         run: ./gradlew build
 
       - name: Upload Jacoco Report
-        if: ${{ success() }}
         uses: actions/upload-artifact@v3
         with:
           name: jacoco-report
@@ -66,12 +65,22 @@ jobs:
           fail_below_threshold: false
           publish_only_summary: false
 
-      - name: Add Coverage Job Summary
-        run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
-
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: code-coverage-report-markdown
-          path: */coverage-results.md
+          path: "*/coverage-results.md"
           retention-days: 1
+
+      - name: Get the Coverage info
+        run: |
+          echo "Total coverage coverage-overall ${{ steps.jacoco.outputs.coverage-overall }}"
+          echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
+          echo "Coverage coveragePercentage ${{ steps.jacoco_reporter.outputs.coveragePercentage }}"
+          echo "Coverage coveragePercentageString ${{ steps.jacoco_reporter.outputs.coveragePercentageString }}"
+
+      - name: Add Coverage Job Summary
+        run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: report
+        run: ls - R
