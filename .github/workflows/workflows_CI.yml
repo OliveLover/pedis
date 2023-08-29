@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: jacoco-report
-          path: ${{ github.workspace }}build/reports/jacoco/test/jacocoTestReport.xml
+          path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
 
       - name: Jacoco Report to PR
         id: jacoco
