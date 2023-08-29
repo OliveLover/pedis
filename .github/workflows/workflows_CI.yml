@@ -76,16 +76,41 @@ jobs:
       - name: Upload to S3
         run: aws s3 cp --region ap-northeast-2 ./github-actions.zip s3://$S3_BUCKET_NAME/
 
-      - name: Run Coverage
-        run: ./gradlew jacocoTestReport
+      #      - name: Run Coverage
+      #        run: ./gradlew jacocoTestReport
 
-      - name: Jacoco Report to PR
-        id: jacoco
-        uses: madrapps/jacoco-report@v1.6.1
+      #      - name: Jacoco Report to PR
+      #        id: jacoco
+      #        uses: madrapps/jacoco-report@v1.6.1
+      #        with:
+      #          paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml,
+      #          token: ${{ secrets.PEDIS_TOKEN }}
+      #          min-coverage-overall: 40
+      #          min-coverage-changed-files: 60
+      #          title: Code Coverage
+      #          update-comment: true
+
+      - name: Produce the coverage report
+        uses: insightsengineering/coverage-action@v2
         with:
-          paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml,
-          token: ${{ secrets.PEDIS_TOKEN }}
-          min-coverage-overall: 40
-          min-coverage-changed-files: 60
-          title: Code Coverage
-          update-comment: true
+        # Path to the Cobertura XML report.
+        path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+        # Minimum total coverage, if you want to the
+        # workflow to enforce it as a standard.
+        # This has no effect if the `fail` arg is set to `false`.
+        threshold: 80
+        # Fail the workflow if the minimum code coverage
+        # reuqirements are not satisfied.
+        fail: true
+        # Publish the rendered output as a PR comment
+        publish: true
+        # Create a coverage diff report.
+        diff: true
+        # Branch to diff against.
+        # Compare the current coverage to the coverage
+        # determined on this branch.
+        diff-branch: git-hub-actions
+        # This is where the coverage reports for the
+        # `diff-branch` are stored.
+        # Branch is created if it doesn't already exist'.
+        diff-storage: _xml_coverage_reports
