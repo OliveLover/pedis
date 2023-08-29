@@ -10,6 +10,7 @@ env:
 
 permissions:
   contents: read
+  checks: write
 
 jobs:
   build:
@@ -59,6 +60,7 @@ jobs:
           coverage_results_path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
           coverage_report_name: Coverage
           coverage_report_title: JaCoCo
+          github_token: ${{ secrets.PEDIS_TOKEN }}
           skip_check_run: false
           minimum_coverage: 80
           fail_below_threshold: false
