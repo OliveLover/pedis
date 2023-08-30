@@ -69,8 +69,7 @@ jobs:
       - name: Get the Coverage info
         run: |
           echo '### Code Coverage' >> $GITHUB_STEP_SUMMARY
-          echo "|Coverage coveragePercentageString|${{ steps.jacoco_reporter.outputs.coveragePercentageString }}|
-                | ------------------------------- | ------------------------------- |" >> $GITHUB_STEP_SUMMARY
+          echo "Coverage coveragePercentageString : ${{ steps.jacoco_reporter.outputs.coveragePercentageString }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v2
@@ -78,9 +77,6 @@ jobs:
           name: code-coverage-report-markdown
           path: ./coverage-results.md
           retention-days: 1
-          
-#      - name: Add Coverage Job Summary
-#        run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
 
       - name: report
         run: ls -R
