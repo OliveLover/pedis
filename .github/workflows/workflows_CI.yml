@@ -80,9 +80,10 @@ jobs:
           echo "Coverage coveragePercentage ${{ steps.jacoco_reporter.outputs.coveragePercentage }}"
           echo "Coverage coveragePercentageString ${{ steps.jacoco_reporter.outputs.coveragePercentageString }}"
           echo "Coverage coverageSummary ${{ steps.jacoco_reporter.outputs.coverageSummary }}"
+          echo '### Hello world!' >> $GITHUB_STEP_SUMMARY
           
-      - name: Add Coverage Job Summary
-        run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
+#      - name: Add Coverage Job Summary
+#        run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
 
       - name: report
         run: ls -R
