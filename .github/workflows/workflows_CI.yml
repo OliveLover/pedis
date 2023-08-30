@@ -66,13 +66,6 @@ jobs:
           fail_below_threshold: false
           publish_only_summary: false
 
-      - name: Upload Code Coverage Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: code-coverage-report-markdown
-          path: "*/coverage-results.md"
-          retention-days: 1
-
       - name: Get the Coverage info
         run: |
           echo "Total coverage coverage-overall ${{ steps.jacoco.outputs.coverage-overall }}"
@@ -81,6 +74,13 @@ jobs:
           echo "Coverage coveragePercentageString ${{ steps.jacoco_reporter.outputs.coveragePercentageString }}"
           echo "Coverage coverageSummary ${{ steps.jacoco_reporter.outputs.coverageSummary }}"
           echo '### Hello world!' >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Code Coverage Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report-markdown
+          path: ./coverage-results.md
+          retention-days: 1
           
 #      - name: Add Coverage Job Summary
 #        run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
