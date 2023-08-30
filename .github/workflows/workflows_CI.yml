@@ -69,15 +69,8 @@ jobs:
       - name: Get the Coverage info
         run: |
           echo '### Code Coverage' >> $GITHUB_STEP_SUMMARY
-          echo "|Coverage coveragePercentageString|${{ steps.jacoco_reporter.outputs.coveragePercentageString }}|" >> $GITHUB_STEP_SUMMARY
-      
-      - uses: gazab/create-markdown-table@v1
-        id: create_table
-        with:
-          file: ./table-data.json
-          columns: '[ "Id", "Name" ]'
-      - run: echo ${{ steps.create_table.outputs.table }}
-          
+          echo "|Coverage coveragePercentageString|${{ steps.jacoco_reporter.outputs.coveragePercentageString }}|
+                | ------------------------------- | ------------------------------- |" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v2
