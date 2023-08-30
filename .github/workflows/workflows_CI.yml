@@ -68,12 +68,9 @@ jobs:
 
       - name: Get the Coverage info
         run: |
-          echo "Total coverage coverage-overall ${{ steps.jacoco.outputs.coverage-overall }}" >> $GITHUB_STEP_SUMMARY
-          echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}" >> $GITHUB_STEP_SUMMARY
-          echo "Coverage coveragePercentage ${{ steps.jacoco_reporter.outputs.coveragePercentage }}" >> $GITHUB_STEP_SUMMARY
-          echo "Coverage coveragePercentageString ${{ steps.jacoco_reporter.outputs.coveragePercentageString }}" >> $GITHUB_STEP_SUMMARY
-          echo "Coverage coverageSummary ${{ steps.jacoco_reporter.outputs.coverageSummary }}"
-          echo '### Hello world!' >> $GITHUB_STEP_SUMMARY
+          echo '### Code Coverage' >> $GITHUB_STEP_SUMMARY
+          echo "|Coverage coveragePercentageString|${{ steps.jacoco_reporter.outputs.coveragePercentageString }}|" >> $GITHUB_STEP_SUMMARY
+          
 
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v2
