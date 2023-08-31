@@ -32,7 +32,8 @@ jobs:
           name: output-text-file
           path: output.txt
 
-      - shell: bash
+      - name: Read value
+        shell: bash
         run: |
           cat output.txt
           echo "Artifact value: "
