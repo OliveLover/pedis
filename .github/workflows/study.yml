@@ -2,7 +2,8 @@ name: github-actions-study
 
 on:
   push:
-    branches: actions-test
+    branches:
+      - actions-test
 
 jobs:
   write-log:
@@ -10,7 +11,7 @@ jobs:
     name: Save output
     
     steps:
-      - shell: bash
+      - name: Perform calculation and store result
         run: |
           expr 1 + 1 > output.txt
           
@@ -32,11 +33,8 @@ jobs:
           name: output-text-file
           path: ./output.txt
 
-      - name: Read value
-        shell: bash
+      - shell: bash
         run: |
           cat output.txt
           echo "Artifact value: "
           cat output.txt
-
-    
