@@ -4,17 +4,39 @@ on:
   push:
     branches: actions-test
 
+env:
+  ENV_RUNS: ubuntu-latest
+
 jobs:
-  example-job:
-    runs-on: ubuntu-latest
+  write-log:
+    runs-on: $ENV_RUNS
     name: Save output
     
     steps:
       - shell: bash
         run: |
           expr 1 + 1 > output.log
+          
       - name: Upload output file
         uses: actions/upload-artifact@v3
         with:
           name: output-log-file
           path: output.log
+
+  read-log:
+    runs-on: $ENV-RUNS
+    name: Read output
+
+    steps:
+      - name: Download output artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ouput-log-file
+
+      - name: Read and uses artifact Value
+        run: |
+          cat output.log
+          echo "Artifact value: "
+          cat output.log
+
+    
