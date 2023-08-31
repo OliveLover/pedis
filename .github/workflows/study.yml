@@ -9,7 +9,7 @@ env:
 
 jobs:
   write-log:
-    runs-on: $ENV_RUNS
+    runs-on: env.ENV_RUNS
     name: Save output
     
     steps:
@@ -24,7 +24,7 @@ jobs:
           path: output.log
 
   read-log:
-    runs-on: $ENV-RUNS
+    runs-on: env.ENV-RUNS
     name: Read output
 
     steps:
