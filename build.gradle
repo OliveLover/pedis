@@ -63,6 +63,7 @@ jacocoTestReport {
     reports {
         xml.required = true
         html.required = false
+        csv.required = true
     }
     finalizedBy 'jacocoTestCoverageVerification'
 }
@@ -83,6 +84,7 @@ jacocoTestCoverageVerification {
                 value = 'COVEREDRATIO'
                 minimum = 0.30
             }
+            excludes = []
         }
     }
 }
