@@ -12,6 +12,10 @@ java {
     sourceCompatibility = '17'
 }
 
+jacoco {
+    toolVersion = "0.8.8"
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -51,4 +55,48 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = false
+        csv.required = true
+    }
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            enabled = true
+
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.60
+            }
+            limit {
+                counter = 'METHOD'
+                value = 'COVEREDRATIO'
+                minimum = 0.60
+            }
+            excludes = [
+                    "**.*Application*"
+            ]
+        }
+    }
+}
+
+processResources.dependsOn('copySecret')
+
+tasks.register('copySecret', Copy) {
+    copy {
+        from './pedis-submodule-config'
+        include "*.yml"
+        into 'src/main/resources'
+    }
 }
