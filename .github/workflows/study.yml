@@ -12,15 +12,16 @@ jobs:
     steps:
       - shell: bash
         run: |
-          expr 1 + 1 > output.log
+          expr 1 + 1 > output.txt
           
       - name: Upload output file
         uses: actions/upload-artifact@v3
         with:
-          name: output-log-file
-          path: output.log
+          name: output-text-file
+          path: output.txt
 
   read-log:
+    needs: write-log
     runs-on: ubuntu-latest
     name: Read output
 
@@ -29,12 +30,12 @@ jobs:
       - name: Download output artifact
         uses: actions/download-artifact@v2
         with:
-          name: ouput-log-file
+          name: ouput-text-file
 
       - name: Read and uses artifact Value
         run: |
           cat output.log
           echo "Artifact value: "
-          cat output.log
+          cat output.txt
 
     
