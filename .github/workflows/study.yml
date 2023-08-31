@@ -31,7 +31,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: output-text-file
-          path: ./output.txt
+          path: .
 
       - shell: bash
         run: |
