@@ -31,10 +31,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ouput-text-file
+          path: output.txt
 
       - name: Read and uses artifact Value
         run: |
-          cat output.log
+          cat output.txt
           echo "Artifact value: "
           cat output.txt
 
