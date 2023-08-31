@@ -30,7 +30,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: output-text-file
-          path: output.txt
+          path: ./output.txt
 
       - name: Read value
         shell: bash
