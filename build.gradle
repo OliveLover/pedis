@@ -62,7 +62,28 @@ jacocoTestReport {
     dependsOn test
     reports {
         xml.required = true
-        html.required = true
+        html.required = false
+    }
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            enabled = true
+
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.30
+            }
+            limit {
+                counter = 'METHOD'
+                value = 'COVEREDRATIO'
+                minimum = 0.30
+            }
+        }
     }
 }
 
