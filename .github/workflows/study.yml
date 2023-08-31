@@ -4,12 +4,9 @@ on:
   push:
     branches: actions-test
 
-env:
-  ENV_RUNS: ubuntu-latest
-
 jobs:
   write-log:
-    runs-on: env.ENV_RUNS
+    runs-on: ubuntu-latest
     name: Save output
     
     steps:
@@ -24,10 +21,11 @@ jobs:
           path: output.log
 
   read-log:
-    runs-on: env.ENV-RUNS
+    runs-on: ubuntu-latest
     name: Read output
 
     steps:
+      - shell: bash
       - name: Download output artifact
         uses: actions/download-artifact@v2
         with:
