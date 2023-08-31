@@ -26,14 +26,13 @@ jobs:
     name: Read output
 
     steps:
-      - shell: bash
       - name: Download output artifact
         uses: actions/download-artifact@v2
         with:
-          name: ouput-text-file
+          name: output-text-file
           path: output.txt
 
-      - name: Read and uses artifact Value
+      - shell: bash
         run: |
           cat output.txt
           echo "Artifact value: "
