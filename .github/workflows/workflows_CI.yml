@@ -53,30 +53,40 @@ jobs:
           name: jacoco-report
           path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
 
-      - name: Jacoco Code Coverage Report
-        id: jacoco_reporter
-        uses: PavanMudigonda/jacoco-reporter@v4.8
+#      - name: Jacoco Code Coverage Report
+#        id: jacoco_reporter
+#        uses: PavanMudigonda/jacoco-reporter@v4.8
+#        with:
+#          coverage_results_path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+#          coverage_report_name: Coverage
+#          coverage_report_title: JaCoCo
+#          github_token: ${{ secrets.PEDIS_TOKEN }}
+#          skip_check_run: true
+#          minimum_coverage: 80
+#          fail_below_threshold: false
+#          publish_only_summary: false
+
+#      - name: Get the Coverage info
+#        run: |
+#          echo '### Code Coverage' >> $GITHUB_STEP_SUMMARY
+#          echo "Coverage coveragePercentageString : ${{ steps.jacoco_reporter.outputs.coveragePercentageString }}" >> $GITHUB_STEP_SUMMARY
+#
+#      - name: Upload Code Coverage Artifacts
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: code-coverage-report-markdown
+#          path: ./coverage-results.md
+#          retention-days: 1
+
+      - name: Add coverage to PR
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.2
         with:
-          coverage_results_path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
-          coverage_report_name: Coverage
-          coverage_report_title: JaCoCo
-          github_token: ${{ secrets.PEDIS_TOKEN }}
-          skip_check_run: true
-          minimum_coverage: 80
-          fail_below_threshold: false
-          publish_only_summary: false
-
-      - name: Get the Coverage info
-        run: |
-          echo '### Code Coverage' >> $GITHUB_STEP_SUMMARY
-          echo "Coverage coveragePercentageString : ${{ steps.jacoco_reporter.outputs.coveragePercentageString }}" >> $GITHUB_STEP_SUMMARY
-
-      - name: Upload Code Coverage Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: code-coverage-report-markdown
-          path: ./coverage-results.md
-          retention-days: 1
-
-      - name: report
-        run: ls -R
+          paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "테스트 커버리지 측정"
+          min-coverage-overall: 60
+          min-coverage-changed-files: 60
+#
+#      - name: report
+#        run: ls -R
