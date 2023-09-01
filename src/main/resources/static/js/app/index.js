@@ -8,7 +8,8 @@ var main = {
     save : function () {
         var data = {
             username: $('#username').val(),
-            password: $('#password').val()
+            password: $('#password').val(),
+            email: $('#email').val()
         };
 
         $.ajax({

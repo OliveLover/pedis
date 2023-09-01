@@ -1,4 +1,4 @@
-package com.example.footcare.Dto;
+package com.example.footcare.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

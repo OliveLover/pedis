@@ -1,4 +1,4 @@
-package com.example.footcare.Controller;
+package com.example.footcare.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

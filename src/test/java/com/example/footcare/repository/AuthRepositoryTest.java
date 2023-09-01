@@ -1,6 +1,6 @@
-package com.example.footcare.Repository;
+package com.example.footcare.repository;
 
-import com.example.footcare.Model.Users;
+import com.example.footcare.model.Users;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class AuthRepositoryTest {
         @DisplayName("user 한 명을 INSERT 한다.")
         void insertOneUser() {
             // given
-            Users user = new Users("김수박", "abcdefg");
+            Users user = new Users("김수박", "abcdefg", "kimsubak@naver.com");
 
             authRepository.save(user);
 
@@ -39,19 +39,20 @@ class AuthRepositoryTest {
 
             // then
             assertThat(usersList).hasSize(1)
-                    .extracting("id", "username", "password")
+                    .extracting("id", "username", "password", "email")
                     .containsExactlyInAnyOrder(
-                            tuple(1L, "김수박", "abcdefg")
+                            tuple(1L, "김수박", "abcdefg", "kimsubak@naver.com")
                     );
         }
 
         @Test
+        @Transactional
         @DisplayName("user 세 명을 INSERT 한다.")
         void insertThreeUsers() {
             // given
-            Users user1 = new Users("김수박", "abcdefg");
-            Users user2 = new Users("박참외", "hijklmn");
-            Users user3 = new Users("이사과", "opqrstu");
+            Users user1 = new Users("김수박", "abcdefg", "kimsubak@naver.com");
+            Users user2 = new Users("박참외", "hijklmn", "parkMelon@google.com");
+            Users user3 = new Users("이사과", "opqrstu", "twoApple@daumn.net");
 
             authRepository.saveAll(List.of(user1, user2, user3));
 
@@ -60,11 +61,11 @@ class AuthRepositoryTest {
 
             // then
             assertThat(usersList).hasSize(3)
-                    .extracting("id", "username", "password")
+                    .extracting("id", "username", "password", "email")
                     .containsExactlyInAnyOrder(
-                            tuple(2L, "김수박", "abcdefg"),
-                            tuple(3L, "박참외", "hijklmn"),
-                            tuple(4L, "이사과", "opqrstu")
+                            tuple(2L, "김수박", "abcdefg", "kimsubak@naver.com"),
+                            tuple(3L, "박참외", "hijklmn", "parkMelon@google.com"),
+                            tuple(4L, "이사과", "opqrstu", "twoApple@daumn.net")
                     );
         }
 

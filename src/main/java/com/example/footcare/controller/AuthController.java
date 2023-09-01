@@ -1,8 +1,8 @@
-package com.example.footcare.Controller;
+package com.example.footcare.controller;
 
-import com.example.footcare.Dto.UserRequestDto;
-import com.example.footcare.Dto.UserResponseDto;
-import com.example.footcare.Service.AuthService;
+import com.example.footcare.dto.UserRequestDto;
+import com.example.footcare.dto.UserResponseDto;
+import com.example.footcare.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
