@@ -17,7 +17,7 @@ if [ -z "$CURRENT_PID" ]; then
 else
   echo "> kill -15 $CURRENT_PID"
   kill -15 $CURRENT_PID
-  sleep 5
+  sleep 10
 fi
 
 echo "> 새 애플리케이션 배포"
@@ -33,3 +33,7 @@ chmod +x $JAR_NAME
 echo "> $JAR_NAME 실행"
 
 nohup java -jar $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
+
+NEW_PID=$!
+wait $NEW_PID
+echo "> 애플리케이션 종료 (PID: $NEW_PID)"
