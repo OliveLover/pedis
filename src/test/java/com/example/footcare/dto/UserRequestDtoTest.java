@@ -1,4 +1,4 @@
-package com.example.footcare.Dto;
+package com.example.footcare.dto;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,13 +13,15 @@ class UserRequestDtoTest {
         // given
         String username = "김수박";
         String password = "abcdefg";
+        String email = "kimsubak@naver.com";
 
         // when
-        UserRequestDto requestDto = new UserRequestDto(username, password);
+        UserRequestDto requestDto = new UserRequestDto(username, password, email);
 
         // then
         assertThat(requestDto.getUsername()).isEqualTo(username);
         assertThat(requestDto.getPassword()).isEqualTo(password);
+        assertThat(requestDto.getEmail()).isEqualTo(email);
     }
 
 }

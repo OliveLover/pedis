@@ -1,7 +1,7 @@
-package com.example.footcare.Service;
+package com.example.footcare.service;
 
-import com.example.footcare.Dto.UserRequestDto;
-import com.example.footcare.Dto.UserResponseDto;
+import com.example.footcare.dto.UserRequestDto;
+import com.example.footcare.dto.UserResponseDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ class AuthServiceTest {
     @DisplayName("requestDto의 인자값을 받아 계정을 생성하면 \"HTTPStatus.CREATED\"와 \"생성 완료\"가 출력된다.")
     void createUser() {
         // given
-        UserRequestDto requestDto = new UserRequestDto("김수박", "abcdefg");
+        UserRequestDto requestDto = new UserRequestDto("김수박", "abcdefg", "kimsubak@naver.com");
 
         // when
         ResponseEntity<UserResponseDto> response = authService.createUser(requestDto);

@@ -1,4 +1,4 @@
-package com.example.footcare.Dto;
+package com.example.footcare.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserRequestDto {
     private String username;
     private String password;
+    private String email;
 }

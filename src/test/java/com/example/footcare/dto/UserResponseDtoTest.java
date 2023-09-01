@@ -1,4 +1,4 @@
-package com.example.footcare.Dto;
+package com.example.footcare.dto;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
