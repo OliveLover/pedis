@@ -26,12 +26,6 @@ public class AuthService {
         String password = passwordEncoder.encode(requestDto.getPassword());
         String email = requestDto.getEmail();
 
-        if (Objects.equals(name, "") || name.isEmpty()) {
-            // name이 비어있을 때 예외를 던지거나 오류 메시지를 반환
-            String errorMessage = "이름을 입력하세요.";
-            return new ResponseEntity<>(new UserResponseDto(errorMessage), HttpStatus.BAD_REQUEST);
-        }
-
         Users users = new Users(name, password, email);
         UserResponseDto responseDto = new UserResponseDto("생성 완료");
 
