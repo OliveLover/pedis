@@ -23,7 +23,7 @@ var main = {
             console.log('호호호');
             window.location.href = '/';
         }).fail(function (error) {
-            alert(JSON.stringify(error));
+            alert(error.responseText);
             console.log('하하하');
         });
     }
