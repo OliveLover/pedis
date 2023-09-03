@@ -53,19 +53,17 @@ jobs:
 
       # before_deploy 디렉토리 생성
       - name: Make Directory
-        run: mkdir -p deploy
+        run: mkdir -p before-deploy
 
-      # Jar 파일 복사
+      # deploy.sh, appspec.yml, jar파일 복사 후, before-deploy 내부의 모든 파일을 압축
       - name: Copy files to deploy directory
         run: |
-          cd deploy
-          cp -r ../build/libs/*.jar .
-          cp -r ../appspec.yml .
-          cp -r ../scripts/* .
-
-      # deploy 디렉토리의 내용 압축
-      - name: Zip deploy directory
-        run: zip -r github-actions.zip deploy
+          cp scripts/*.sh before-deploy/
+          cp appspec.yml before-deploy/
+          cp build/libs/*.jar before-deploy/
+          cd before-deploy && zip -r before-deploy
+          cd ../ && mkdir -p deploy
+          mv before-deploy/before-deploy.zip deploy/footcare.zip
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -75,7 +73,7 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./github-actions.zip s3://$S3_BUCKET_NAME/
+        run: aws s3 cp --region ap-northeast-2 ./footcare.zip s3://$S3_BUCKET_NAME/
 
   develop:
     runs-on: ubuntu-latest
@@ -93,5 +91,5 @@ jobs:
           --application-name github-actions \
           --deployment-group-name github-actions-group \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=github-actions-deploy-0824,bundleType=zip,key=github-actions.zip \
+          --s3-location bucket=github-actions-deploy-0824,bundleType=zip,key=footcare.zip \
           --region ap-northeast-2
