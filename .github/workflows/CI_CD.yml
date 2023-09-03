@@ -91,5 +91,5 @@ jobs:
           --application-name github-actions \
           --deployment-group-name github-actions-group \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=github-actions-deploy-0824,bundleType=zip,key=github-actions.zip \
+          --s3-location bucket=github-actions-deploy-0824,bundleType=zip,key=footcare.zip \
           --region ap-northeast-2
