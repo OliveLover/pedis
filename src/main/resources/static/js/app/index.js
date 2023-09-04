@@ -9,6 +9,7 @@ var main = {
         var data = {
             username: $('#username').val(),
             password: $('#password').val(),
+            checkPassword: $('#checkPassword').val(),
             email: $('#email').val()
         };
 

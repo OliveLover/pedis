@@ -17,6 +17,9 @@ public class UserRequestDto {
     @NotEmpty(message = "비밀번호는 필수항목입니다.")
     private String password;
 
+    @NotEmpty(message = "비밀번호 확인이 필요합니다.")
+    private String checkPassword;
+
     @NotEmpty(message = "이메일은 필수항목입니다.")
     @Email
     private String email;

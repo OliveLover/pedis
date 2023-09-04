@@ -20,6 +20,11 @@ public class AuthExceptionHandler {
         return new ResponseEntity<>(errorResponse(e.getBindingResult()), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> checkPasswordException(IllegalArgumentException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
     private String errorResponse(BindingResult bindingResult) {
         return Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage();
     }

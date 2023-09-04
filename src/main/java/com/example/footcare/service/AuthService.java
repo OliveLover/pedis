@@ -11,8 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Objects;
-
 @RequiredArgsConstructor
 @Service
 public class AuthService {
@@ -26,11 +24,19 @@ public class AuthService {
         String password = passwordEncoder.encode(requestDto.getPassword());
         String email = requestDto.getEmail();
 
+        isPasswordMatch(requestDto);
+
         Users users = new Users(name, password, email);
         UserResponseDto responseDto = new UserResponseDto("생성 완료");
 
         authRepository.save(users);
 
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+    }
+
+    private static void isPasswordMatch(UserRequestDto requestDto) {
+        if (!requestDto.getPassword().equals(requestDto.getCheckPassword())) {
+            throw new IllegalArgumentException("두 개의 비밀번호가 일치하지 않습니다.");
+        }
     }
 }

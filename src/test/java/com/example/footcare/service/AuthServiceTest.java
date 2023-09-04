@@ -26,7 +26,7 @@ class AuthServiceTest {
     @DisplayName("requestDto의 인자값을 받아 계정을 생성하면 \"HTTPStatus.CREATED\"와 \"생성 완료\"가 출력된다.")
     void createUser() {
         // given
-        UserRequestDto requestDto = new UserRequestDto("김수박", "abcdefg", "kimsubak@naver.com");
+        UserRequestDto requestDto = new UserRequestDto("김수박", "abcdefg", "abcdefg", "kimsubak@naver.com");
 
         // when
         ResponseEntity<UserResponseDto> response = authService.createUser(requestDto);

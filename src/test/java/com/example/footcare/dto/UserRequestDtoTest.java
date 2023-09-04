@@ -13,14 +13,16 @@ class UserRequestDtoTest {
         // given
         String username = "김수박";
         String password = "abcdefg";
+        String checkPassword = "abcdefg";
         String email = "kimsubak@naver.com";
 
         // when
-        UserRequestDto requestDto = new UserRequestDto(username, password, email);
+        UserRequestDto requestDto = new UserRequestDto(username, password, checkPassword, email);
 
         // then
         assertThat(requestDto.getUsername()).isEqualTo(username);
         assertThat(requestDto.getPassword()).isEqualTo(password);
+        assertThat(requestDto.getCheckPassword()).isEqualTo(checkPassword);
         assertThat(requestDto.getEmail()).isEqualTo(email);
     }
 
