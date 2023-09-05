@@ -58,6 +58,9 @@ dependencies {
 
     // Validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Java Jwt
+    implementation 'com.auth0:java-jwt:4.4.0'
 }
 
 tasks.named('test') {
