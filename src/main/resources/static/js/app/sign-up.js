@@ -21,11 +21,9 @@ var main = {
             data: JSON.stringify(data)
         }).done(function() {
             alert('회원 가입이 완료되었습니다.');
-            console.log('호호호');
             window.location.href = '/';
         }).fail(function (error) {
             alert(error.responseText);
-            console.log('하하하');
         });
     }
 

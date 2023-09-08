@@ -45,6 +45,10 @@ public class AuthService {
 
         Optional<Users> findUser = authRepository.findByUsername(username);
 
+        if (findUser.isEmpty()) {
+            throw new UsernameNotFoundException("존재하지 않는 사용자입니다.");
+        }
+
         if (!passwordEncoder.matches(password, findUser.get().getPassword())) {
             throw new BadCredentialsException("비밀번호를 다시 확인해 주세요.");
         }

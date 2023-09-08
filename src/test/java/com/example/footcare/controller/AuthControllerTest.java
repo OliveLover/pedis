@@ -28,9 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles("test")
-@SpringBootTest(webEnvironment = RANDOM_PORT)
 @ExtendWith(DatabaseClearExtension.class)
 @AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 class AuthControllerTest {
 
     @Autowired
@@ -144,7 +144,6 @@ class AuthControllerTest {
 
     @Nested
     @DisplayName("\"/api/v1/login\" 를 호출할 때, ")
-    @Transactional
     class login {
 
         @BeforeEach
@@ -183,6 +182,22 @@ class AuthControllerTest {
                             .with(csrf()))
                     .andExpect(status().isForbidden())
                     .andExpect(content().string("비밀번호를 다시 확인해 주세요."))
+                    .andDo(print());
+        }
+
+        @Test
+        @DisplayName("AuthLoginRequestDto의 username이 존재하지 않을 경우, \"NOT_FOUND\"와 JSON 형식으로 \"msg\"가 출력된다.")
+        void testUsernameNotExistsInAuthLoginRequestDto() throws Exception {
+            // given
+            AuthLoginRequestDto requestDto = new AuthLoginRequestDto("박참외", "abcdefg");
+
+            // when & then
+            mockMvc.perform(post("/api/v1/login")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsBytes(requestDto))
+                            .with(csrf()))
+                    .andExpect(status().isNotFound())
+                    .andExpect(content().string("존재하지 않는 사용자입니다."))
                     .andDo(print());
         }
     }

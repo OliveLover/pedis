@@ -27,6 +27,11 @@ class UserDetailsImplTest {
         // then
         assertThat(user.getUsername()).isEqualTo(userDetailsImpl.getUsername());
         assertThat(user.getPassword()).isEqualTo(userDetailsImpl.getPassword());
+        assertThat(userDetailsImpl.getAuthorities()).isNull();
+        assertThat(userDetailsImpl.isAccountNonExpired()).isTrue();
+        assertThat(userDetailsImpl.isAccountNonLocked()).isTrue();
+        assertThat(userDetailsImpl.isCredentialsNonExpired()).isTrue();
+        assertThat(userDetailsImpl.isEnabled()).isTrue();
     }
 
 }

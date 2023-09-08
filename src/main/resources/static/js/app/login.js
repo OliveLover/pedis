@@ -19,11 +19,9 @@ var main = {
             data: JSON.stringify(data)
         }).done(function() {
             alert('로그인 완료');
-            console.log('호호호');
             window.location.href = '/';
         }).fail(function (error) {
             alert(error.responseText);
-            console.log('하하하');
         });
     }
 
