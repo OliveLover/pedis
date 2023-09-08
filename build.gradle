@@ -112,12 +112,12 @@ jacocoTestCoverageVerification {
     }
 }
 
-processResources.dependsOn('copySecret')
-
-tasks.register('copySecret', Copy) {
-    copy {
-        from './pedis-submodule-config'
-        include "*.yml"
-        into 'src/main/resources'
-    }
-}
+//processResources.dependsOn('copySecret')
+//
+//tasks.register('copySecret', Copy) {
+//    copy {
+//        from './pedis-submodule-config'
+//        include "*.yml"
+//        into 'src/main/resources'
+//    }
+//}

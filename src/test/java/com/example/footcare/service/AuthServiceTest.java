@@ -1,9 +1,11 @@
 package com.example.footcare.service;
 
+import com.example.footcare.data.DatabaseClearExtension;
 import com.example.footcare.dto.AuthResponseDto;
 import com.example.footcare.dto.AuthSignUpRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @ActiveProfiles("test")
+@ExtendWith(DatabaseClearExtension.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class AuthServiceTest {
 

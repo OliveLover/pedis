@@ -1,5 +1,6 @@
 package com.example.footcare.controller;
 
+import com.example.footcare.data.DatabaseClearExtension;
 import com.example.footcare.dto.AuthLoginRequestDto;
 import com.example.footcare.dto.AuthSignUpRequestDto;
 import com.example.footcare.model.Users;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
+@ExtendWith(DatabaseClearExtension.class)
 @AutoConfigureMockMvc
 class AuthControllerTest {
 
@@ -41,7 +44,6 @@ class AuthControllerTest {
 
     @Nested
     @DisplayName("\"/api/v1/join\" 를 호출할 때, ")
-    @Transactional
     class createUser {
         @Test
         @DisplayName("AuthSignUpRequestDto의 인자값이 모두 존재하면, \"CREATED\"와 JSON 형식으로 \"msg\"가 출력된다.")
@@ -183,6 +185,5 @@ class AuthControllerTest {
                     .andExpect(content().string("비밀번호를 다시 확인해 주세요."))
                     .andDo(print());
         }
-
     }
 }
