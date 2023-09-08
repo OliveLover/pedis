@@ -17,7 +17,7 @@ class UserRequestDtoTest {
         String email = "kimsubak@naver.com";
 
         // when
-        UserRequestDto requestDto = new UserRequestDto(username, password, checkPassword, email);
+        AuthSignUpRequestDto requestDto = new AuthSignUpRequestDto(username, password, checkPassword, email);
 
         // then
         assertThat(requestDto.getUsername()).isEqualTo(username);
