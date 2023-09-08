@@ -46,22 +46,19 @@ class UserDetailsServiceImplTest {
         assertThat(userDetailsImpl.getAuthorities()).isNull();
     }
 
-//    @Test
-//    @DisplayName("user 정보가 USERS 테이블에 존재하지 않을때 UserDetailsImpl을 생성하면 String 형태로 \"존재 하지 않는 사용자 입니다.\"가 나온다.")
-//    void testLoadUserByUsernameUserDoesNotExistInDB() {
-//        // given
-//        String username = "김수박";
-//        String findUsername = "박참외";
-//        Users mockUser = new Users(username, "abcdefg", "kimsubak@naver.com");
-//        when(authRepository.findByUsername(findUsername)).thenReturn(Optional.of(mockUser));
-//
-//        // when
-//        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) userDetailsServiceImpl.loadUserByUsername(username);
-//
-//        // then
-//        assertThat(userDetailsImpl).isNotNull();
-//        assertThat(userDetailsImpl.getUsername()).isEqualTo(username);
-//        assertThat(userDetailsImpl.getPassword()).isEqualTo("abcdefg");
-//        assertThat(userDetailsImpl.getAuthorities()).isNull();
-//    }
+    @Test
+    @DisplayName("user 정보가 USERS 테이블에 존재하지 않을때 UserDetailsImpl을 생성하면 Null이 된다.")
+    void testUserDetailsImplWhenUserDoesNotExistInDatabase() {
+        // given
+        String username = "김수박";
+        String findUsername = "박참외";
+        Users mockUser = new Users(username, "abcdefg", "kimsubak@naver.com");
+        when(authRepository.findByUsername(findUsername)).thenReturn(Optional.of(mockUser));
+
+        // when
+        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) userDetailsServiceImpl.loadUserByUsername(username);
+
+        // then
+        assertThat(userDetailsImpl).isNull();
+    }
 }

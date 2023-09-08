@@ -98,12 +98,12 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
-                minimum = 0.00
+                minimum = 0.60
             }
             limit {
                 counter = 'METHOD'
                 value = 'COVEREDRATIO'
-                minimum = 0.00
+                minimum = 0.60
             }
             excludes = [
                     "**.*Application*"
