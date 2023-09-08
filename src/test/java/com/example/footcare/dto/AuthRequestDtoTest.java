@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserRequestDtoTest {
+class AuthRequestDtoTest {
 
     @Test
-    @DisplayName("UserRequestDto 필드값을 검증한다.")
+    @DisplayName("AuthRequestDto 필드값을 검증한다.")
     public void dtoTest() {
         // given
         String username = "김수박";
@@ -17,7 +17,7 @@ class UserRequestDtoTest {
         String email = "kimsubak@naver.com";
 
         // when
-        UserRequestDto requestDto = new UserRequestDto(username, password, checkPassword, email);
+        AuthSignUpRequestDto requestDto = new AuthSignUpRequestDto(username, password, checkPassword, email);
 
         // then
         assertThat(requestDto.getUsername()).isEqualTo(username);
@@ -25,5 +25,4 @@ class UserRequestDtoTest {
         assertThat(requestDto.getCheckPassword()).isEqualTo(checkPassword);
         assertThat(requestDto.getEmail()).isEqualTo(email);
     }
-
 }

@@ -1,31 +1,27 @@
 var main = {
     init : function () {
         var _this = this;
-        $('#btn-save').on('click', function () {
-        _this.save();
+        $('#btn-login').on('click', function () {
+        _this.login();
         });
     },
-    save : function () {
+    login : function () {
         var data = {
             username: $('#username').val(),
-            password: $('#password').val(),
-            checkPassword: $('#checkPassword').val(),
-            email: $('#email').val()
+            password: $('#password').val()
         };
 
         $.ajax({
             type: 'POST',
-            url: '/api/v1/join',
+            url: '/api/v1/login',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function() {
-            alert('회원 가입이 완료되었습니다.');
-            console.log('호호호');
+            alert('로그인 완료');
             window.location.href = '/';
         }).fail(function (error) {
             alert(error.responseText);
-            console.log('하하하');
         });
     }
 

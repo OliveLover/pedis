@@ -34,4 +34,14 @@ class IndexControllerTest {
         // then
         assertThat(body).contains("name");
     }
+
+    @Test
+    @DisplayName("로그인 페이지를 로딩한다.")
+    void login() {
+        // when
+        String body = this.restTemplate.getForObject("/login", String.class);
+
+        // then
+        assertThat(body).contains("name");
+    }
 }

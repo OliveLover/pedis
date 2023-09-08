@@ -1,13 +1,14 @@
 package com.example.footcare.repository;
 
+import com.example.footcare.data.DatabaseClearExtension;
 import com.example.footcare.model.Users;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @ActiveProfiles("test")
+@ExtendWith(DatabaseClearExtension.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class AuthRepositoryTest {
 
@@ -26,7 +28,6 @@ class AuthRepositoryTest {
     @DisplayName("USERS 테이블은 ")
     class userTable {
         @Test
-        @Transactional
         @DisplayName("user 한 명을 INSERT 한다.")
         void insertOneUser() {
             // given
@@ -46,7 +47,6 @@ class AuthRepositoryTest {
         }
 
         @Test
-        @Transactional
         @DisplayName("user 세 명을 INSERT 한다.")
         void insertThreeUsers() {
             // given
@@ -63,11 +63,10 @@ class AuthRepositoryTest {
             assertThat(usersList).hasSize(3)
                     .extracting("id", "username", "password", "email")
                     .containsExactlyInAnyOrder(
-                            tuple(2L, "김수박", "abcdefg", "kimsubak@naver.com"),
-                            tuple(3L, "박참외", "hijklmn", "parkMelon@google.com"),
-                            tuple(4L, "이사과", "opqrstu", "twoApple@daumn.net")
+                            tuple(1L, "김수박", "abcdefg", "kimsubak@naver.com"),
+                            tuple(2L, "박참외", "hijklmn", "parkMelon@google.com"),
+                            tuple(3L, "이사과", "opqrstu", "twoApple@daumn.net")
                     );
         }
-
     }
 }
