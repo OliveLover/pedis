@@ -9,11 +9,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -47,18 +49,15 @@ class UserDetailsServiceImplTest {
     }
 
     @Test
-    @DisplayName("user 정보가 USERS 테이블에 존재하지 않을때 UserDetailsImpl을 생성하면 Null이 된다.")
+    @DisplayName("user 정보가 USERS 테이블에 존재하지 않을때 UserDetailsImpl을 생성하면 \"NOT_FOUD\"와 \"존재하지 않는 사용자입니다.\"가 출력 된다.")
     void testUserDetailsImplWhenUserDoesNotExistInDatabase() {
         // given
-        String username = "김수박";
         String findUsername = "박참외";
-        Users mockUser = new Users(username, "abcdefg", "kimsubak@naver.com");
-        when(authRepository.findByUsername(findUsername)).thenReturn(Optional.of(mockUser));
+        when(authRepository.findByUsername(findUsername)).thenReturn(Optional.empty());
 
-        // when
-        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) userDetailsServiceImpl.loadUserByUsername(username);
-
-        // then
-        assertThat(userDetailsImpl).isNull();
+        // when & then
+        assertThatThrownBy(() -> userDetailsServiceImpl.loadUserByUsername(findUsername))
+                .isInstanceOf(UsernameNotFoundException.class)
+                .hasMessage("존재하지 않는 사용자입니다.");
     }
 }

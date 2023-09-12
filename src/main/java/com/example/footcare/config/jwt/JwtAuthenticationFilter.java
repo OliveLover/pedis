@@ -1,6 +1,7 @@
 package com.example.footcare.config.jwt;
 
 import com.example.footcare.config.auth.UserDetailsImpl;
+import com.example.footcare.dto.LoginInfoDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,9 +29,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = null;
         String password = null;
         try {
-            LoginInfo loginInfo = om.readValue(request.getInputStream(), LoginInfo.class);
-            username = loginInfo.getUsername();
-            password = loginInfo.getPassword();
+            LoginInfoDto loginInfoDto = om.readValue(request.getInputStream(), LoginInfoDto.class);
+            username = loginInfoDto.getUsername();
+            password = loginInfoDto.getPassword();
 
         } catch (Exception e) {
             e.printStackTrace();
