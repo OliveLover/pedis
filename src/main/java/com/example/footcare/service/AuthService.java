@@ -44,6 +44,7 @@ public class AuthService {
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
+    @Transactional(readOnly = true)
     public ResponseEntity<AuthResponseDto> login(AuthLoginRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = requestDto.getPassword();

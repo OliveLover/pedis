@@ -6,29 +6,24 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.io.IOException;
 
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/api/v1/login", "POST");
     private final AuthenticationManager authenticationManager;
-
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-        setRequiresAuthenticationRequestMatcher(DEFAULT_ANT_PATH_REQUEST_MATCHER);
-        System.out.println(DEFAULT_ANT_PATH_REQUEST_MATCHER.getPattern());
-    }
+    private final JwtUtil jwtUtil;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("JwtAuthenticationFilter : 진입");
         ObjectMapper om = new ObjectMapper();
         String username = null;
         String password = null;
@@ -36,8 +31,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             LoginInfo loginInfo = om.readValue(request.getInputStream(), LoginInfo.class);
             username = loginInfo.getUsername();
             password = loginInfo.getPassword();
-            System.out.println("JwtAuthenticationFilter 에서 username : " + username);
-            System.out.println("JwtAuthenticationFilter 에서 password : " + password);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,10 +39,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
 
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        System.out.println("userDetails의 username : " + userDetails.getUsername());
 
         return authentication;
     }
@@ -58,9 +48,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws IOException, ServletException {
         UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
         String username = userDetails.getUsername();
-        JwtUtil jwtUtil = new JwtUtil();
         jwtUtil.generateToken(response, username);
+    }
 
-        chain.doFilter(request, response);
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                              AuthenticationException failed) throws IOException, ServletException {
+        response.setStatus(HttpStatus.NOT_FOUND.value());
+        response.setContentType("application/string; charset=UTF-8");
+        String errorMessage = "인증되지 않은 사용자입니다.";
+        response.getWriter().write(errorMessage);
     }
 }

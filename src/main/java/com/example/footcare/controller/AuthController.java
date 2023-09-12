@@ -1,6 +1,5 @@
 package com.example.footcare.controller;
 
-import com.example.footcare.dto.AuthLoginRequestDto;
 import com.example.footcare.dto.AuthResponseDto;
 import com.example.footcare.dto.AuthSignUpRequestDto;
 import com.example.footcare.service.AuthService;
@@ -20,11 +19,6 @@ public class AuthController {
     @PostMapping("/api/v1/join")
     public ResponseEntity<AuthResponseDto> createUser(@Valid @RequestBody AuthSignUpRequestDto requestDto) {
         return authService.createUser(requestDto);
-    }
-
-    @PostMapping("/api/v1/login")
-    public ResponseEntity<AuthResponseDto> login(@RequestBody AuthLoginRequestDto requestDto) {
-        return authService.login(requestDto);
     }
 
 }

@@ -13,7 +13,7 @@ var main = {
 
         $.ajax({
             type: 'POST',
-            url: '/api/v1/login',
+            url: '/login',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
