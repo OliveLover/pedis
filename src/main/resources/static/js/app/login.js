@@ -17,7 +17,10 @@ var main = {
             dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        }).done(function() {
+        }).done(function(data, textStatus, response) {
+            console.log("로그인 완료");
+            console.log(response.getResponseHeader('Authorization'));
+            localStorage.setItem('authorizationToken', response.getResponseHeader('Authorization'));
             alert('로그인 완료');
             window.location.href = '/';
         }).fail(function (error) {
