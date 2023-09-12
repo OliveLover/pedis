@@ -16,7 +16,7 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    public String generateToken(HttpServletResponse response, String username) {
+    public void generateToken(HttpServletResponse response, String username) {
         Algorithm algorithm = Algorithm.HMAC512(secretKey);
 
 
@@ -28,6 +28,5 @@ public class JwtUtil {
 
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
 
-        return jwtToken;
     }
 }

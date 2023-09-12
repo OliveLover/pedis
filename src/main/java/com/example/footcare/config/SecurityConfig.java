@@ -1,6 +1,7 @@
 package com.example.footcare.config;
 
 import com.example.footcare.config.jwt.JwtAuthenticationFilter;
+import com.example.footcare.config.jwt.JwtAuthorizationFilter;
 import com.example.footcare.config.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +49,9 @@ public class SecurityConfig {
         public void configure(HttpSecurity httpSecurity) throws Exception {
             AuthenticationManager authenticationManager = httpSecurity.getSharedObject(AuthenticationManager.class);
             httpSecurity
-                    .addFilterBefore(new JwtAuthenticationFilter(authenticationManager, jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                    .addFilterBefore(new JwtAuthenticationFilter(authenticationManager, jwtUtil), UsernamePasswordAuthenticationFilter.class)
+                    .addFilterAfter(new JwtAuthorizationFilter(authenticationManager, jwtUtil), JwtAuthenticationFilter.class)
+            ;
         }
     }
 }

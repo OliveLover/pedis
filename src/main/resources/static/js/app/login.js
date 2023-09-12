@@ -14,7 +14,7 @@ var main = {
         $.ajax({
             type: 'POST',
             url: '/login',
-            dataType: 'json',
+            dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function() {
