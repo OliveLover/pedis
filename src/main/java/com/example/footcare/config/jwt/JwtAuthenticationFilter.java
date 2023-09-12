@@ -50,6 +50,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
         String username = userDetails.getUsername();
         jwtUtil.generateToken(response, username);
+        String successMessage = "로그인 완료";
+        response.getWriter().write(successMessage);
     }
 
     @Override
