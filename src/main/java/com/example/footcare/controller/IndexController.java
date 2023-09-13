@@ -1,5 +1,9 @@
 package com.example.footcare.controller;
 
+import com.example.footcare.config.auth.UserDetailsImpl;
+import com.example.footcare.config.auth.UserDetailsServiceImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -22,7 +26,8 @@ public class IndexController {
     }
 
     @GetMapping("/gallery")
-    public String gallery() {
+    public String gallery(Authentication authentication) {
+        System.out.println(authentication.getName());
         return "gallery";
     }
 }

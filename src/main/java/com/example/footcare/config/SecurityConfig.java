@@ -3,6 +3,7 @@ package com.example.footcare.config;
 import com.example.footcare.config.jwt.JwtAuthenticationFilter;
 import com.example.footcare.config.jwt.JwtAuthorizationFilter;
 import com.example.footcare.config.jwt.JwtUtil;
+import com.example.footcare.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,7 @@ public class SecurityConfig {
 
     private final CorsConfig corsConfig;
     private final JwtUtil jwtUtil;
+    private final AuthRepository authRepository;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -50,7 +52,7 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = httpSecurity.getSharedObject(AuthenticationManager.class);
             httpSecurity
                     .addFilterBefore(new JwtAuthenticationFilter(authenticationManager, jwtUtil), UsernamePasswordAuthenticationFilter.class)
-                    .addFilterBefore(new JwtAuthorizationFilter(authenticationManager, jwtUtil), JwtAuthenticationFilter.class)
+                    .addFilterBefore(new JwtAuthorizationFilter(authenticationManager, jwtUtil, authRepository), JwtAuthenticationFilter.class)
             ;
         }
     }
