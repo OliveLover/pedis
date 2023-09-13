@@ -50,7 +50,7 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = httpSecurity.getSharedObject(AuthenticationManager.class);
             httpSecurity
                     .addFilterBefore(new JwtAuthenticationFilter(authenticationManager, jwtUtil), UsernamePasswordAuthenticationFilter.class)
-                    .addFilterAfter(new JwtAuthorizationFilter(authenticationManager, jwtUtil), JwtAuthenticationFilter.class)
+                    .addFilterBefore(new JwtAuthorizationFilter(authenticationManager, jwtUtil), JwtAuthenticationFilter.class)
             ;
         }
     }

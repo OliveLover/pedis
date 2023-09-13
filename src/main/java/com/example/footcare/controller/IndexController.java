@@ -20,4 +20,9 @@ public class IndexController {
     public String login() {
         return "login";
     }
+
+    @GetMapping("/gallery")
+    public String gallery() {
+        return "gallery";
+    }
 }

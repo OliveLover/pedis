@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS USERS;
+
+CREATE TABLE `USERS` (
+    `ID` bigint NOT NULL AUTO_INCREMENT,
+    `EMAIL` varchar(255),
+    `PASSWORD` varchar(255),
+    `USERNAME` varchar(255)
+);
+
+INSERT INTO USERS(ID, EMAIL, PASSWORD, USERNAME) VALUES
+(1, 'dd@dd', '$2a$10$yJ1x3mh4.Nt0.blvTDLT2OXUxqhka8qNVCqpvxRJWQsJC/lEG28Mu', 'dd');
