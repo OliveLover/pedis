@@ -39,13 +39,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String token = request.getHeader(JwtProperties.HEADER_STRING)
                 .replace(JwtProperties.TOKEN_PREFIX, "");
 
-        System.out.println(token);
-
         String username = JWT.require(Algorithm.HMAC512("cocoball")).build()
                         .verify(token)
                                 .getClaim("username")
                                         .asString();
-        System.out.println(username);
 
         if (username != null) {
             Users user = authRepository.findByUsername(username).orElseThrow(() ->
@@ -58,9 +55,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     null,
                     null
             );
-            System.out.println("authentication = " + authentication.getName());
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            System.out.println("SecurityContextHolder 이후 : " + SecurityContextHolder.getContext().getAuthentication().getName());
         }
         chain.doFilter(request, response);
     }
