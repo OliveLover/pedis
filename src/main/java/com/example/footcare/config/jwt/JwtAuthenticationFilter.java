@@ -1,47 +1,47 @@
 package com.example.footcare.config.jwt;
 
 import com.example.footcare.config.auth.UserDetailsImpl;
-import com.example.footcare.dto.LoginInfoDto;
+import com.example.footcare.dto.LoginDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.io.IOException;
 
-@RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final AuthenticationManager authenticationManager;
+    private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/api/v1/login", "POST");
     private final JwtUtil jwtUtil;
+
+    public JwtAuthenticationFilter (JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+        setRequiresAuthenticationRequestMatcher(DEFAULT_ANT_PATH_REQUEST_MATCHER);
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        ObjectMapper om = new ObjectMapper();
-        String username = null;
-        String password = null;
         try {
-            LoginInfoDto loginInfoDto = om.readValue(request.getInputStream(), LoginInfoDto.class);
-            username = loginInfoDto.getUsername();
-            password = loginInfoDto.getPassword();
+            LoginDto loginDto = new ObjectMapper().readValue(request.getInputStream(), LoginDto.class);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            return getAuthenticationManager().authenticate(
+                    new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword(), null)
+            );
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
-        return authentication;
     }
 
     @Override
@@ -49,9 +49,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws IOException, ServletException {
         UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
         String username = userDetails.getUsername();
-        jwtUtil.generateToken(response, username);
-        String successMessage = "로그인 완료";
-        response.getWriter().write(successMessage);
+        String token = jwtUtil.createToken(username);
+        response.addHeader(JwtProperties.HEADER_STRING, token);
     }
 
     @Override

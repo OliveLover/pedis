@@ -1,12 +1,9 @@
 package com.example.footcare.controller;
 
-import com.example.footcare.dto.LoginInfoDto;
 import com.example.footcare.data.DatabaseClearExtension;
 import com.example.footcare.dto.AuthSignUpRequestDto;
-import com.example.footcare.model.Users;
 import com.example.footcare.repository.AuthRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 

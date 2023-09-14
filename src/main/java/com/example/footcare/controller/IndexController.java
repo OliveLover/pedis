@@ -25,8 +25,7 @@ public class IndexController {
     }
 
     @GetMapping("/gallery")
-    public String gallery(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        System.out.println(userDetails.getUsername());
+    public String gallery() {
         return "gallery";
     }
 }

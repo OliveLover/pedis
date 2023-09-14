@@ -1,11 +1,15 @@
 package com.example.footcare.config.jwt;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import jakarta.servlet.http.HttpServletResponse;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.Date;
 
@@ -16,17 +20,44 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    public void generateToken(HttpServletResponse response, String username) {
+    public String createToken(String username) {
         Algorithm algorithm = Algorithm.HMAC512(secretKey);
-
 
         String jwtToken = JWT.create()
                 .withSubject(username)
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .withClaim("username", username)
+                .withIssuer("noisy-rabbit")
                 .sign(algorithm);
 
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+        return JwtProperties.TOKEN_PREFIX + jwtToken;
+    }
 
+    public String getJwtFromHeader(HttpServletRequest request) {
+        String token = request.getHeader(JwtProperties.HEADER_STRING);
+        System.out.println("token : " + token);
+
+        if (!StringUtils.isEmpty(token) && token.startsWith(JwtProperties.TOKEN_PREFIX)) {
+            return token.replace(JwtProperties.TOKEN_PREFIX, "");
+        }
+
+        return null;
+    }
+
+    public boolean validateToken(String token) {
+        Algorithm algorithm = Algorithm.HMAC512(secretKey);
+        try {
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer("noisy-rabbit").build();
+            verifier.verify(token);
+            return true;
+        } catch (JWTVerificationException e) {
+            e.getStackTrace();
+        }
+        return false;
+    }
+
+    public String getUserNameFromToken(String token) {
+        Algorithm algorithm = Algorithm.HMAC512(secretKey);
+        return JWT.require(algorithm).build().verify(token).getClaim("username").asString();
     }
 }
