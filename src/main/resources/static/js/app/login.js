@@ -14,11 +14,20 @@ var main = {
         $.ajax({
             type: 'POST',
             url: '/api/v1/login',
-            dataType: 'json',
+            dataType: 'text',
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data)
-        }).done(function() {
+            data: JSON.stringify(data),
+            beforeSend: function(jqXHR) {
+                var authorizationHeader = localStorage.getItem('authorizationToken');
+                if (authorizationHeader) {
+                    jqXHR.setRequestHeader('Authorization', authorizationHeader)
+                }
+            }
+        }).done(function(data, textStatus, jqXHR) {
             console.log("로그인 완료 콘솔");
+            var authorizationHeader = jqXHR.getResponseHeader('Authorization');
+            localStorage.setItem('authorizationToken', authorizationHeader);
+            alert("로그인 완료");
             window.location.href = '/';
         }).fail(function (error) {
             alert(error.responseText);
