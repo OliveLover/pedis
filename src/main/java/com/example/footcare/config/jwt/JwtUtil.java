@@ -4,7 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +34,6 @@ public class JwtUtil {
 
     public String getJwtFromHeader(HttpServletRequest request) {
         String token = request.getHeader(JwtProperties.HEADER_STRING);
-        System.out.println("token : " + token);
 
         if (!StringUtils.isEmpty(token) && token.startsWith(JwtProperties.TOKEN_PREFIX)) {
             return token.replace(JwtProperties.TOKEN_PREFIX, "");

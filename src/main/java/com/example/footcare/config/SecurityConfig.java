@@ -44,7 +44,7 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth", "GET")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/gallery")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/gallery","GET")).permitAll()
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers
